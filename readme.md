@@ -1,1 +1,1 @@
-Readme coming soon
+Agar.io implementation writing in Python using Pygame and Pygbag.
