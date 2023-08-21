@@ -1,5 +1,9 @@
 import pygame as pg
 
+from food import Food
+from player import Player
+from collision_observer import CollisionObserver
+
 # Initiate the pygame module
 pg.init()
 
@@ -7,24 +11,37 @@ pg.init()
 screen_width = 800
 screen_height = 600
 screen = pg.display.set_mode((screen_width, screen_height))
-pg.display.set_caption('Agario')
+pg.display.set_caption("Agario")
 
-# Circle properties
-circle_color = (255, 0, 0)  # Red color in RGB format
-circle_center = (400, 300)  # (x, y) coordinates of the circle's center
-circle_radius = 50
+# <-- Objects -->
+player = Player(screen, (255, 255, 255))
+foods = [Food.random(screen) for x in range(10)]
+
+# <-- Observers -->
+cls_obs = CollisionObserver()
+cls_obs.set_colliders(foods)
 
 running = True
 while running:
+    print("running")
+    # Clear the screen
+    screen.fill((0, 0, 0))  # Fill the screen with black
+
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
 
-    # Clear the screen
-    screen.fill((0, 0, 0))  # Fill the screen with black
+    # Check to draw food
+    for food in foods:
+        if food.show:
+            food.draw()
+        else:
+            foods.remove(food)
+    
+    player.move(pg.key.get_pressed())
+    player.draw()
 
-    # Draw the circle
-    pg.draw.circle(screen, circle_color, circle_center, circle_radius)
+    cls_obs.observe(player)
 
     # Update the display
     pg.display.flip()

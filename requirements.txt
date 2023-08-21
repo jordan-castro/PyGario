@@ -1,0 +1,8 @@
+numpy==1.25.2
+progressbar2==4.2.0
+pygame==2.5.1
+pygbag==0.7.1
+python-utils==3.7.0
+scipy==1.11.2
+token-utils==0.1.8
+typing_extensions==4.7.1
